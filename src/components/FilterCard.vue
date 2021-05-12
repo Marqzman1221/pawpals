@@ -1,22 +1,31 @@
 <template>
   <card>
-    <toolbar>
-      <template #toolbar-title>
-        <div class="text-gray-800 text-black text-2xl">Filter</div>
-      </template>
-    </toolbar>
+    <template #card-title>Filter</template>
 
     <pet-filter-form />
+
+    <template #card-actions>
+      <Button block @click="submitFilter">SEARCH</Button>
+    </template>
   </card>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import Card from './Card.vue'
-import Toolbar from './Toolbar.vue'
 import PetFilterForm from './PetFilterForm.vue'
+import Button from './Button.vue'
 
 export default defineComponent({
-  components: { Card, Toolbar, PetFilterForm },
+  components: { Card, PetFilterForm, Button },
+  setup() {
+    function submitFilter() {
+      console.log('Filter')
+    }
+
+    return {
+      submitFilter,
+    }
+  }
 })
 </script>

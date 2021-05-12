@@ -1,5 +1,5 @@
 <template>
-  <form class="px-6 pb-6">
+  <form>
     <div class="flex flex-col items-start">
       <autocomplete
         v-model="selectedAnimal"

@@ -1,6 +1,16 @@
 <template>
   <div class="bg-white m-2 rounded border-2 border-gray-200">
-    <slot></slot>
+    <div class="m-6">
+      <div class="text-2xl">
+        <slot name="card-title"></slot>
+      </div>
+
+      <slot></slot>
+
+      <div class="mt-6">
+        <slot name="card-actions"></slot>
+      </div>
+    </div>
   </div>
 </template>
 

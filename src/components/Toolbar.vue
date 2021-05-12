@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white p-6 flex flex-row justify-between items-center w-full h-16"
+    class="bg-white p-4 flex flex-row justify-between items-center w-full h-16"
   >
     <div>
       <slot name="toolbar-icon"> </slot>

@@ -1,9 +1,9 @@
 <template>
-  <div class="relative flex flex-1 py-2 w-full flex-col items-center">
+  <div class="relative flex flex-1 pt-2 w-full flex-col items-center">
     <div class="w-full">
-      <span class="flex py-2 text-left text-pink-600 text-medium">
+      <label class="flex py-2 text-left text-pink-600 text-medium">
         {{ label }}
-      </span>
+      </label>
       <input
         class="
           transition
@@ -16,6 +16,7 @@
           py-2
           z-10
           focus:border-pink-600
+          hover:border-pink-400
           border-2
           z-10
         "
