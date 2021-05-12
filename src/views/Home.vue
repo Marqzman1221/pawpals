@@ -1,18 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <filter-card />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { defineComponent } from '@vue/runtime-core'
+// import Card from '../components/Card.vue'
+import FilterCard from '../components/FilterCard.vue'
+// import Toolbar from '../components/Toolbar.vue'
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld,
-  },
-};
+export default defineComponent({
+  components: { FilterCard },
+  // TODO
+})
 </script>
