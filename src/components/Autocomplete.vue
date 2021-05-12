@@ -104,7 +104,10 @@ export default defineComponent({
     const searchInput = ref(props.defaultValue)
     const selected = ref(false)
 
-    if (props.defaultValue) emit('update:modelValue', props.defaultValue)
+    if (props.defaultValue){
+      emit('update:modelValue', props.defaultValue)
+      selected.value = true
+    }
 
     const allItems = reactive(props.items)
 
@@ -125,7 +128,6 @@ export default defineComponent({
     })
 
     function selectItem(item) {
-      console.log('Click!')
       searchInput.value = getPropertyFromItem(item, props.itemValue)
       selected.value = true
       emit('update:modelValue', searchInput.value)

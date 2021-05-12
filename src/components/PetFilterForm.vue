@@ -3,7 +3,7 @@
     <div class="flex flex-col items-start">
       <autocomplete
         v-model="selectedAnimal"
-        :defaultValue="'Rabbit'"
+        defaultValue="Rabbit"
         label="Animal"
         :items="animalItems"
         :filter="filterAnimals"
