@@ -1,9 +1,5 @@
-import { reactive, computed, readonly } from 'vue'
-import axios from 'axios'
-
-const Axios = axios.create({
-  baseURL: 'https://api.petfinder.com/v2/',
-})
+import { reactive, readonly } from 'vue'
+import api from '../api'
 
 const petsList = reactive([])
 const focusedPet = reactive({})
@@ -47,8 +43,9 @@ function APPEND_RECENTLY_VIEWED(pet) {
 async function fetchPets() {
   try {
     const filters = getPetFilters
-    const response = await Axios.get('/animals', { params: filters })
-    SET_PETS_LIST(response.data.animals)
+    console.log(filters)
+    const response = await api.getAnimals(filters)
+    SET_PETS_LIST(response.animals)
   } catch (error) {
     console.log(error)
   }
@@ -56,8 +53,8 @@ async function fetchPets() {
 
 async function fetchPetByID(id) {
   try {
-    const response = await Axios.get(`/animals/${id}`)
-    SET_FOCUSED_PET(response.data.animal)
+    const response = await api.getAnimalByID(id)
+    SET_FOCUSED_PET(response.animal)
   } catch (error) {
     console.log(error)
   }
@@ -65,8 +62,8 @@ async function fetchPetByID(id) {
 
 async function fetchTypes() {
   try {
-    const response = await Axios.get('/types')
-    const types = response.data.types.map((item) => item.name)
+    const response = await api.getAnimalTypes()
+    const types = response.types.map((item) => item.name)
 
     SET_TYPES_LIST(types)
   } catch (error) {
@@ -76,8 +73,8 @@ async function fetchTypes() {
 
 async function fetchLocations() {
   try {
-    const response = await Axios.get('/organizations')
-    const locations = response.data.types.map((item) => {
+    const response = await api.getOrganizations()
+    const locations = response.organizations.map((item) => {
       return `${item.address.city}, ${item.address.state}`
     })
 
@@ -91,7 +88,7 @@ function appendRecentlyViewed(pet) {
   APPEND_RECENTLY_VIEWED(pet)
 }
 
-const getPetFilters = computed(() => filters)
+const getPetFilters = () => filters.value
 
 export const usePets = () => ({
   // State
