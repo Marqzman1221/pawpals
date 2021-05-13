@@ -42,9 +42,8 @@ function APPEND_RECENTLY_VIEWED(pet) {
 
 async function fetchPets() {
   try {
-    const filters = getPetFilters
-    console.log(filters)
-    const response = await api.getAnimals(filters)
+    const data = getPetFilters()
+    const response = await api.getAnimals(data)
     SET_PETS_LIST(response.animals)
   } catch (error) {
     console.log(error)
@@ -67,7 +66,7 @@ async function fetchTypes() {
 
     SET_TYPES_LIST(types)
   } catch (error) {
-    console.log(error)
+    console.log
   }
 }
 
@@ -88,7 +87,10 @@ function appendRecentlyViewed(pet) {
   APPEND_RECENTLY_VIEWED(pet)
 }
 
-const getPetFilters = () => filters.value
+const getPetFilters = () => ({
+  type: filters.type,
+  location: filters.location,
+})
 
 export const usePets = () => ({
   // State

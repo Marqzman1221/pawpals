@@ -24,7 +24,7 @@ import PetFilterForm from './PetFilterForm.vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 import { mdiReload } from '@mdi/js'
-import { usePets } from '../compositions/pets'
+import { usePets } from '@/compositions/pets'
 
 export default defineComponent({
   components: { Card, PetFilterForm, Button, Icon },
@@ -41,7 +41,6 @@ export default defineComponent({
       petsList,
       mdiReload,
       submitFilter,
-      fetchPets,
     }
   },
 })
