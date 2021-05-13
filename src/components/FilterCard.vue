@@ -24,18 +24,25 @@ import PetFilterForm from './PetFilterForm.vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 import { mdiReload } from '@mdi/js'
+import { usePets } from '../compositions/pets'
 
 export default defineComponent({
   components: { Card, PetFilterForm, Button, Icon },
   setup() {
-    function submitFilter() {
+    const { petsList, fetchPets } = usePets()
+
+    async function submitFilter() {
       console.log('Filter')
+      await fetchPets()
+      console.log(petsList.value)
     }
 
     return {
+      petsList,
       mdiReload,
       submitFilter,
+      fetchPets,
     }
-  }
+  },
 })
 </script>
