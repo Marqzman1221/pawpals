@@ -2,18 +2,16 @@
   <form>
     <div class="flex flex-col items-start">
       <autocomplete
-        v-model="selectedAnimal"
+        v-model="filters.type"
         defaultValue="Rabbit"
         label="Animal"
-        :items="animalItems"
+        :items="typesList"
         :filter="filterAnimals"
-        item-text="name"
-        item-value="name"
       />
       <autocomplete
-        v-model="selectedLocation"
+        v-model="filters.location"
         label="Location"
-        :items="locationItems"
+        :items="locationsList"
         :filter="filterLocations"
       />
     </div>
@@ -21,46 +19,29 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent } from 'vue'
 import Autocomplete from './Autocomplete.vue'
+import { usePets } from '../compositions/pets'
 
 export default defineComponent({
   components: {
     Autocomplete,
   },
   setup() {
-    const selectedAnimal = ref('')
+    const { filters, typesList, locationsList } = usePets()
+
+    // watch(getPetFilters, (currentValue, oldValue) => {
+    //   console.log('OLD: ', oldValue)
+    //   console.log('NEW: ', currentValue)
+    // })
 
     // eslint-disable-next-line no-unused-vars
     function filterAnimals(item, queryText, itemText) {
-      const text = item.name.toLowerCase()
+      const text = item.toLowerCase()
       const searchText = queryText.toLowerCase()
 
       return text.indexOf(searchText) > -1
     }
-
-    const animalItems = reactive([
-      {
-        name: 'Rabbit',
-      },
-      {
-        name: 'Dog',
-      },
-      {
-        name: 'Cat',
-      },
-      {
-        name: 'Bird',
-      },
-      {
-        name: 'Lizard',
-      },
-      {
-        name: 'Fish',
-      },
-    ])
-
-    const selectedLocation = ref('')
 
     // eslint-disable-next-line no-unused-vars
     function filterLocations(item, queryText, itemText) {
@@ -70,21 +51,11 @@ export default defineComponent({
       return text.indexOf(searchText) > -1
     }
 
-    const locationItems = reactive([
-      'Raleigh',
-      'New York City',
-      'Atlanta',
-      'Los Angeles',
-      'Denver',
-      'Seattle',
-    ])
-
     return {
-      selectedAnimal,
-      animalItems,
+      filters,
+      typesList,
       filterAnimals,
-      selectedLocation,
-      locationItems,
+      locationsList,
       filterLocations,
     }
   },
