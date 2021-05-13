@@ -4,34 +4,61 @@
       <label class="flex py-2 text-left text-pink-600 text-medium">
         {{ label }}
       </label>
-      <input
+      <div
         class="
+          flex
           transition
           duration-200
           ease-in-out
           w-full
+          h-12
           rounded
           bg-gray-200
-          px-4
-          py-2
+          pl-4
           z-10
-          focus:border-pink-600
           hover:border-pink-400
           border-2
           z-10
+          group
         "
-        type="text"
-        autocomplete="off"
-        v-model="searchInput"
-        @focus="modal = true"
-        @blur="modal = false"
-        @input="selected = false"
-      />
+        :class="modal ? 'border-pink-600' : ''"
+      >
+        <!-- <div class="flex flex-auto flex-wrap"></div> -->
+        <input
+          class="
+            bg-transparent
+            apprearance-none
+            outline-none
+            w-full
+            group-focus:border-pink-600
+          "
+          type="text"
+          autocomplete="off"
+          v-model="searchInput"
+          @input="selected = false"
+          @focus="modal = true"
+          @blur="modal = false"
+        />
+        <div class="flex items-center w-12">
+          <Button
+            v-show="selected"
+            class="outline-none"
+            icon
+            color="pink"
+            @click.prevent="clearSelection"
+            :disabled="!selected"
+            flat
+          >
+            <icon :path="mdiClose" />
+          </Button>
+        </div>
+      </div>
     </div>
 
     <div
       v-show="filteredItems && modal"
       class="
+        my-1
         absolute
         top-24
         w-full
@@ -53,7 +80,7 @@
             hover:text-white
           "
           :class="
-            searchInput === item || searchInput === item[itemText]
+            (searchInput === item || searchInput === item[itemText]) && selected
               ? 'bg-pink-600 text-white'
               : ''
           "
@@ -71,6 +98,9 @@
 
 <script>
 import { computed, defineComponent, reactive, ref } from 'vue'
+import Button from './Button.vue'
+import Icon from './Icon.vue'
+import { mdiClose } from '@mdi/js'
 
 export default defineComponent({
   props: {
@@ -99,12 +129,16 @@ export default defineComponent({
       default: '',
     },
   },
+  components: {
+    Button,
+    Icon,
+  },
   setup(props, { emit }) {
     const modal = ref(false)
     const searchInput = ref(props.defaultValue)
     const selected = ref(false)
 
-    if (props.defaultValue){
+    if (props.defaultValue) {
       emit('update:modelValue', props.defaultValue)
       selected.value = true
     }
@@ -133,13 +167,21 @@ export default defineComponent({
       emit('update:modelValue', searchInput.value)
     }
 
+    function clearSelection() {
+      searchInput.value = ''
+      selected.value = false
+      emit('update:modelValue', searchInput.value)
+    }
+
     return {
+      mdiClose,
       searchInput,
       modal,
       selected,
       allItems,
       selectItem,
       filteredItems,
+      clearSelection,
     }
   },
 })
