@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white m-2 rounded border-2 border-gray-200">
     <div class="m-6">
-      <div class="text-2xl">
+      <div class="flex text-2xl">
         <slot name="card-title"></slot>
       </div>
 
