@@ -10,7 +10,7 @@
   </div>
 
   <div v-else>
-    <search-modal />
+    <pet-search-modal />
     <div v-for="pet in petsList" :key="pet.id" ref="scroll">
       <pet-card :animal="pet" />
     </div>
@@ -18,15 +18,15 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import { usePets } from '../compositions/pets'
 import PetCard from './PetCard'
-import SearchModal from './SearchModal'
+import PetSearchModal from './PetSearchModal'
 import { mdiMagnify } from '@mdi/js'
 
 export default defineComponent({
-  components: { PetCard, SearchModal },
+  components: { PetCard, PetSearchModal },
   setup() {
     const { queriedParams, loadingList, petsList, fetchPets } = usePets()
     const breakpoints = useBreakpoints(breakpointsTailwind)
