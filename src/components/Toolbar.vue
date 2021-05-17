@@ -4,7 +4,7 @@
       <slot name="toolbar-icon"> </slot>
     </div>
 
-    <span class="inline-block text-2xl text-bold mx-4 align-middle">
+    <span class="inline-block text-2xl font-bold mx-4 align-middle">
       <slot name="toolbar-title"> </slot>
     </span>
 
