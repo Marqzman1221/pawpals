@@ -13,6 +13,7 @@
     "@mdi/js": "^5.9.55",
     "@petfinder/petfinder-js": "^1.0.6",
     "@tailwindcss/postcss7-compat": "^2.1.2",
+    "@vueuse/core": "^4.11.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
