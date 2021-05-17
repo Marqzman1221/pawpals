@@ -1,6 +1,6 @@
 <template>
   <app-header />
-  <div class="absolute top-16 w-full overflow-y-auto">
+  <div class="flex pt-16 justify-center">
     <router-view />
   </div>
 </template>
