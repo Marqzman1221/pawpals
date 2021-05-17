@@ -43,7 +43,7 @@ export default defineComponent({
     flat: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   setup(props) {
     const backgroundColor = computed(() => {
