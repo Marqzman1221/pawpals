@@ -97,13 +97,17 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 import { mdiClose } from '@mdi/js'
 
 export default defineComponent({
   props: {
+    modelValue: {
+      type: String,
+      required: true,
+    },
     label: {
       type: String,
       default: 'Label',
@@ -124,6 +128,14 @@ export default defineComponent({
       type: Function,
       default: () => true,
     },
+    searchFunction: {
+      type: Function,
+      default: null,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     defaultValue: {
       type: String || Object,
       default: '',
@@ -135,15 +147,15 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const modal = ref(false)
-    const searchInput = ref(props.defaultValue)
+    const searchInput = ref('')
     const selected = ref(false)
 
-    if (props.defaultValue) {
-      emit('update:modelValue', props.defaultValue)
-      selected.value = true
-    }
-
-    const allItems = reactive(props.items)
+    onMounted(() => {
+      if (props.modelValue) {
+        searchInput.value = props.modelValue
+        selected.value = true
+      }
+    })
 
     function getPropertyFromItem(item, property) {
       if (property == null) return item
@@ -154,7 +166,7 @@ export default defineComponent({
     }
 
     const filteredItems = computed(() => {
-      return allItems.filter((item) => {
+      return props.items.filter((item) => {
         if (selected.value) return true
 
         return props.filter(item, searchInput.value, props.itemText)
@@ -162,9 +174,10 @@ export default defineComponent({
     })
 
     function selectItem(item) {
-      searchInput.value = getPropertyFromItem(item, props.itemValue)
       selected.value = true
+      searchInput.value = getPropertyFromItem(item, props.itemValue)
       emit('update:modelValue', searchInput.value)
+      modal.value = false
     }
 
     function clearSelection() {
@@ -173,12 +186,18 @@ export default defineComponent({
       emit('update:modelValue', searchInput.value)
     }
 
+    if (props.searchFunction) {
+      watch(searchInput, () => {
+        if (props.loading || selected.value) return
+        else props.searchFunction(searchInput.value)
+      })
+    }
+
     return {
       mdiClose,
       searchInput,
       modal,
       selected,
-      allItems,
       selectItem,
       filteredItems,
       clearSelection,
