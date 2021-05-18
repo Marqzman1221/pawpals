@@ -1,14 +1,14 @@
 <template>
-  <div
-    class="bg-white p-6 flex flex-row justify-between items-center w-full h-16"
-  >
+  <div class="bg-white p-4 flex flex-row items-center w-full h-16">
     <div>
       <slot name="toolbar-icon"> </slot>
-
-      <slot name="toolbar-title"> </slot>
     </div>
 
-    <div>
+    <span class="inline-block text-2xl font-bold mx-4 align-middle">
+      <slot name="toolbar-title"> </slot>
+    </span>
+
+    <div class="flex flex-grow justify-end">
       <slot name="toolbar-actions"> </slot>
     </div>
   </div>
