@@ -2,6 +2,8 @@ import { reactive, ref, computed, toRaw, readonly } from 'vue'
 import api from '../api'
 
 const loadingList = ref(true)
+const loadingPet = ref(true)
+
 const petsList = reactive([])
 const focusedPet = reactive({})
 const recentlyViewed = reactive([])
@@ -14,11 +16,14 @@ const params = reactive({
   location: 'Raleigh, NC',
   page: 1,
 })
+const maxPage = ref(null)
 
 let queriedParams = { ...toRaw(params) }
 
-function SET_PETS_LIST(list) {
+function SET_PETS_LIST(list, pagination) {
   petsList.value = list
+  maxPage.value = pagination.total_pages
+  loadingList.value = false
 }
 
 function APPEND_PETS_LIST(list) {
@@ -27,6 +32,7 @@ function APPEND_PETS_LIST(list) {
 
 function SET_FOCUSED_PET(pet) {
   focusedPet.value = pet
+  loadingPet.value = false
 }
 
 function SET_TYPES_LIST(list) {
@@ -58,12 +64,12 @@ function SAVE_QUERIED_FILTERS(params) {
 async function fetchPets() {
   try {
     loadingList.value = true
+    params.page = 1
     const data = getPetParams()
     const response = await api.getAnimals(data)
 
-    SET_PETS_LIST(response.animals)
+    SET_PETS_LIST(response.animals, response.pagination)
     SAVE_QUERIED_FILTERS(data)
-    loadingList.value = false
   } catch (error) {
     throw new Error(error)
   }
@@ -71,6 +77,8 @@ async function fetchPets() {
 
 async function fetchPetsAppend() {
   try {
+    if (params.page === maxPage.value) return
+
     params.page += 1
     const data = getPetParams()
     const response = await api.getAnimals(data)
@@ -83,6 +91,7 @@ async function fetchPetsAppend() {
 
 async function fetchPetByID(id) {
   try {
+    loadingPet.value = true
     const response = await api.getAnimalByID(id)
 
     SET_FOCUSED_PET(response.animal)
@@ -105,6 +114,8 @@ async function fetchTypes() {
 async function fetchLocations(prefix) {
   try {
     const response = await api.getLocations(prefix)
+    if (!Array.isArray(response)) return
+
     const locations = response.map((item) => {
       return `${item.value}, ${item.state_code.substr(3, 2)}`
     })
@@ -136,8 +147,10 @@ export const usePets = () => ({
   fetchLocations,
   appendRecentlyViewed,
   // Getters
+  maxPage: readonly(maxPage),
   queriedParams: readonly(queriedParams),
   loadingList: computed(() => loadingList.value),
+  loadingPet: computed(() => loadingPet.value),
   petsList: computed(() => petsList.value),
   focusedPet: computed(() => focusedPet.value),
   recentlyViewed: computed(() => recentlyViewed.value),
