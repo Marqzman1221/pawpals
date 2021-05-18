@@ -43,7 +43,7 @@ import { usePets } from '@/compositions/pets'
 export default defineComponent({
   components: { Autocomplete, Card, Button },
   setup() {
-    const loadingLocations = ref(false)
+    // Collect state and functions from usePets composition
     const {
       params,
       fetchPets,
@@ -53,11 +53,14 @@ export default defineComponent({
       fetchLocations,
     } = usePets()
 
+    const loadingLocations = ref(false)
+
     onMounted(() => {
       fetchTypes()
     })
 
     async function searchLocations(value) {
+      // If locations API call is in progress, then return
       if (loadingLocations.value) return
 
       loadingLocations.value = true
@@ -70,6 +73,7 @@ export default defineComponent({
       const text = item.toLowerCase()
       const searchText = queryText.toLowerCase()
 
+      // Return true if searchText is found in the item
       return text.indexOf(searchText) > -1
     }
 

@@ -66,6 +66,7 @@ import Icon from './ui/Icon.vue'
 export default defineComponent({
   components: { PetCard, PetSearchModal, Icon },
   setup() {
+    // Collect state and functions from usePets composition
     const {
       maxPage,
       queriedParams,
@@ -75,18 +76,21 @@ export default defineComponent({
       fetchPetsAppend,
     } = usePets()
 
+    // Initialize reactive breakpoints
     const breakpoints = useBreakpoints(breakpointsTailwind)
 
     const lgAndGreater = breakpoints.greater('lg')
 
     onMounted(async () => {
+      // If petsList has already been populated, do not fetch pets again
       if (petsList.value) return
 
       await fetchPets()
     })
 
-    const bottom = ref(false)
+    const atBottom = ref(false)
 
+    // Calculation function to detect if the user has scrolled to the bottom
     function bottomVisible() {
       const scrollY = window.scrollY
       const visible = document.documentElement.clientHeight
@@ -95,17 +99,21 @@ export default defineComponent({
       return bottomOfPage || pageHeight < visible
     }
 
+    // On scroll, update the atBottom boolean
     window.addEventListener('scroll', () => {
-      bottom.value = bottomVisible()
+      atBottom.value = bottomVisible()
     })
 
     const appendingList = ref(false)
 
-    watch(bottom, async () => {
-      if (!appendingList.value && bottom.value) {
+    // On changes to atBottom
+    watch(atBottom, async () => {
+      // If list append is not in progress and user is at the bottom,
+      // then fetch next page and append
+      if (!appendingList.value && atBottom.value) {
         appendingList.value = true
         await fetchPetsAppend()
-        bottom.value = false
+        atBottom.value = false
         appendingList.value = false
       }
     })

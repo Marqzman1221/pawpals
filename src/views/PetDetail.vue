@@ -173,17 +173,23 @@ import Button from '../components/ui/Button.vue'
 export default defineComponent({
   components: { Card, Icon, Button },
   setup() {
+    // Get current route
     const route = useRoute()
+
+    // Get Vue Router instance
     const router = useRouter()
 
+    // Collect state and functions from usePets compositon
     const { loadingPet, focusedPet, fetchPetByID, appendRecentlyViewed } =
       usePets()
 
+    // Build pet address string
     function getAddressString() {
       if (!focusedPet.value.contact.address) return ''
 
       const address = focusedPet.value.contact.address
 
+      // If no street is provided, set to empty string
       const street = `${address.address1 ? address.address1 + ', ' : ''}`
 
       return `${street}${address.city}, ${address.state} ${address.postcode}`
@@ -192,17 +198,21 @@ export default defineComponent({
     onMounted(async () => {
       const id = route.params.id
 
+      // Fetch latest data on pet by id
       await fetchPetByID(id)
 
+      // Append this focused pet to the recentlyViewed list
       appendRecentlyViewed(focusedPet.value)
     })
 
+    // Go back to home page
     function backToList() {
       router.push({
         name: 'Home',
       })
     }
 
+    // Open pet's Petfinder url in new tab
     function openURL(url) {
       window.open(url, '_blank')
     }

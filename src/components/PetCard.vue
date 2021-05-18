@@ -99,12 +99,18 @@ export default defineComponent({
   },
   components: { Card, Icon },
   setup(props) {
+    // Get Vue Router instance
     const router = useRouter()
+
+    // Collect state and functions from usePets composition
     const { queriedParams } = usePets()
+
+    // Initialize reactive breakpoints
     const breakpoints = useBreakpoints(breakpointsTailwind)
 
     const smAndGreater = breakpoints.greater('sm')
 
+    // Navigate to pet detail page with given id
     function openDetail(id) {
       router.push({
         name: 'Pet',
@@ -115,9 +121,11 @@ export default defineComponent({
     }
 
     const displayLocation = computed(() => {
+      // If user queried a location, return the pet's distance in miles
       if (queriedParams && queriedParams.location)
         return `${props.animal.distance} mi`
 
+      // Otherwise return pets city and state
       return `${props.animal.contact.address.city}, ${props.animal.contact.address.state}`
     })
 

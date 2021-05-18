@@ -65,17 +65,25 @@ export default defineComponent({
   components: { PetSearchCard, Icon, Button },
   setup() {
     const modal = ref(false)
+
+    // Collect state and functions from usePets composition
     const { params, queriedParams } = usePets()
+
+    // Initialize reactive breakpoints
     const breakpoints = useBreakpoints(breakpointsTailwind)
 
     const lgAndGreater = breakpoints.greater('lg')
 
+    // Open search fullscreen modal and hide scroll bar
     function openModal() {
       modal.value = true
 
       document.documentElement.style.overflow = 'hidden'
     }
 
+    // Close search fullscreen modal
+    // Reset param inputs to previously queried values
+    // Unhide scroll bar
     function closeModal() {
       modal.value = false
       params.type = queriedParams.type
@@ -84,6 +92,7 @@ export default defineComponent({
       document.documentElement.style.overflow = 'auto'
     }
 
+    // Ensure scroll bar is unhidden when component is unmounted after window resize
     onUnmounted(() => {
       document.documentElement.style.overflow = 'auto'
     })

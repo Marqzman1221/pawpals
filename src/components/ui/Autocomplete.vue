@@ -151,6 +151,8 @@ export default defineComponent({
     const selected = ref(false)
 
     onMounted(() => {
+      // If binded value (v-model) exists, set the field's searchInput value to modelValue
+      // And set selected to true
       if (props.modelValue) {
         searchInput.value = props.modelValue
         selected.value = true
@@ -158,24 +160,31 @@ export default defineComponent({
     })
 
     function getPropertyFromItem(item, property) {
+      // If property (itemText or itemValue) is null, return plain item
       if (property == null) return item
 
+      // If item is not an Object, return plain item
       if (item !== Object(item)) return item
 
+      // Otherwise return property from item object
       return item[property]
     }
 
     const filteredItems = computed(() => {
       return props.items.filter((item) => {
+        // If an item is already selected, display full list of items
         if (selected.value) return true
 
+        // Return filtered set of items using the passed filter prop
         return props.filter(item, searchInput.value, props.itemText)
       })
     })
 
     function selectItem(item) {
       selected.value = true
+      // Set the searchInput value to the selected value
       searchInput.value = getPropertyFromItem(item, props.itemValue)
+      // Update the binding value (v-model) using the selected value
       emit('update:modelValue', searchInput.value)
       modal.value = false
     }
@@ -187,6 +196,7 @@ export default defineComponent({
     }
 
     if (props.searchFunction) {
+      // On changes to searchInput, run the passed searchFunction prop
       watch(searchInput, () => {
         if (props.loading || selected.value) return
         else props.searchFunction(searchInput.value)

@@ -1,38 +1,48 @@
 import { reactive, ref, computed, toRaw, readonly } from 'vue'
 import api from '../api'
 
+// Booleans to manage loading states
 const loadingList = ref(true)
 const loadingPet = ref(true)
 
+// List of queried pets
 const petsList = reactive([])
+// Pet object viewed in the PetDetail page
 const focusedPet = reactive({})
+// List of recenlty viewed pets
 const recentlyViewed = reactive([])
 
+// Lists of filter values
 const typesList = reactive([])
 const locationsList = reactive([])
 
+// Search form values
+// Packaged and sent as params to API
 const params = reactive({
   type: 'Rabbit',
   location: 'Raleigh, NC',
   page: 1,
 })
+
+// Total number of pages available after query
 const maxPage = ref(null)
 
+// Non-reactive copy of previously queried params
 let queriedParams = { ...toRaw(params) }
 
 function SET_PETS_LIST(list, pagination) {
-  petsList.value = list
-  maxPage.value = pagination.total_pages
-  loadingList.value = false
+  petsList.value = list // Set petsList to returned list
+  maxPage.value = pagination.total_pages // Set maxPage to number of total pages
+  loadingList.value = false // Stop loading
 }
 
 function APPEND_PETS_LIST(list) {
-  petsList.value = [...petsList.value, ...list]
+  petsList.value = [...petsList.value, ...list] // Append new page to the end of current list
 }
 
 function SET_FOCUSED_PET(pet) {
-  focusedPet.value = pet
-  loadingPet.value = false
+  focusedPet.value = pet // Set focused pet to returned pet
+  loadingPet.value = false // Stop loading
 }
 
 function SET_TYPES_LIST(list) {
@@ -44,21 +54,26 @@ function SET_LOCATIONS_LIST(list) {
 }
 
 function APPEND_RECENTLY_VIEWED(pet) {
+  // Get raw copy of recentlyViewed
   let recents = toRaw(recentlyViewed)
 
+  // Check if pet already exists in recentlyViewed list
   const foundIndex = recents.findIndex((item) => item.id === pet.id)
 
+  // If does exist, remove from previous position
   if (foundIndex > -1) recents.splice(foundIndex, 1)
 
+  // Place pet at top of recents list
   recents.unshift(pet)
 
+  // Trim list to be 5 items in length
   if (recents.length > 5) recents.splice(5)
 
   recentlyViewed.value = recents
 }
 
 function SAVE_QUERIED_FILTERS(params) {
-  queriedParams = params
+  queriedParams = params // Save copy of previously queried params
 }
 
 async function fetchPets() {
@@ -77,6 +92,7 @@ async function fetchPets() {
 
 async function fetchPetsAppend() {
   try {
+    // If current page is equal to total pages, return
     if (params.page === maxPage.value) return
 
     params.page += 1
@@ -130,6 +146,7 @@ function appendRecentlyViewed(pet) {
   APPEND_RECENTLY_VIEWED(pet)
 }
 
+// Get copy of params object
 const getPetParams = () => ({
   type: params.type,
   location: params.location,

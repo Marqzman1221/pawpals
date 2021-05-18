@@ -35,7 +35,10 @@ import { usePets } from '@/compositions/pets'
 export default defineComponent({
   components: { PetSearchCard, PetsList, RecentlyViewedCard },
   setup() {
+    // Collect state and functions from usePets composition
     const { recentlyViewed } = usePets()
+
+    // Initialize reactive breakpoints
     const breakpoints = useBreakpoints(breakpointsTailwind)
 
     const lgAndGreater = breakpoints.greater('lg')

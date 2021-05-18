@@ -13,6 +13,7 @@ import { mdiGithub } from '@mdi/js'
 export default defineComponent({
   components: { Button, Icon },
   setup() {
+    // Open project's Github repository url in new tab
     function openRepoPage() {
       window.open('https://github.com/Marqzman1221/pawpals', '_blank')
     }
