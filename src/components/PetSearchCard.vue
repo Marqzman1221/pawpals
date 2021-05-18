@@ -3,9 +3,6 @@
     <template #card-title>
       <span class="inline-flex items-center w-full">
         <span class="flex-grow">Find A Pet</span>
-        <Button class="justify-self-end" icon>
-          <icon :path="mdiReload" />
-        </Button>
       </span>
     </template>
 
@@ -30,7 +27,7 @@
     </form>
 
     <template #card-actions>
-      <Button class="mt-6" block @click="submitSearch">SEARCH</Button>
+      <Button class="mt-6" block @click="submitSearch()">SEARCH</Button>
       <slot name="cancel-button"></slot>
     </template>
   </card>
@@ -38,20 +35,17 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
-import Autocomplete from './Autocomplete.vue'
-import Card from './Card.vue'
-import Button from './Button.vue'
-import Icon from './Icon.vue'
-import { mdiReload } from '@mdi/js'
+import Autocomplete from './ui/Autocomplete.vue'
+import Card from './ui/Card.vue'
+import Button from './ui/Button.vue'
 import { usePets } from '@/compositions/pets'
 
 export default defineComponent({
-  components: { Autocomplete, Card, Button, Icon },
+  components: { Autocomplete, Card, Button },
   setup() {
     const loadingLocations = ref(false)
     const {
       params,
-      petsList,
       fetchPets,
       typesList,
       fetchTypes,
@@ -61,7 +55,6 @@ export default defineComponent({
 
     onMounted(() => {
       fetchTypes()
-      // fetchLocations()
     })
 
     async function searchLocations(value) {
@@ -87,8 +80,6 @@ export default defineComponent({
     return {
       params,
       loadingLocations,
-      petsList,
-      mdiReload,
       typesList,
       locationsList,
       filterTypes,

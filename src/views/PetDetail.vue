@@ -160,15 +160,15 @@
 import { defineComponent, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePets } from '@/compositions/pets'
-import Icon from '@/components/Icon'
-import Card from '@/components/Card'
+import Icon from '@/components/ui/Icon'
+import Card from '@/components/ui/Card'
 import {
   mdiChevronLeft,
   mdiEmailOutline,
   mdiPhoneOutline,
   mdiHomeCityOutline,
 } from '@mdi/js'
-import Button from '../components/Button.vue'
+import Button from '../components/ui/Button.vue'
 
 export default defineComponent({
   components: { Card, Icon, Button },

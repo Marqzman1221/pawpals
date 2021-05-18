@@ -61,7 +61,7 @@ import {
   mdiEmoticonHappyOutline,
   mdiEmoticonSadOutline,
 } from '@mdi/js'
-import Icon from './Icon.vue'
+import Icon from './ui/Icon.vue'
 
 export default defineComponent({
   components: { PetCard, PetSearchModal, Icon },

@@ -6,8 +6,8 @@
 
 <script>
 import { defineComponent } from 'vue'
-import Button from './Button'
-import Icon from './Icon'
+import Button from './ui/Button'
+import Icon from './ui/Icon'
 import { mdiGithub } from '@mdi/js'
 
 export default defineComponent({

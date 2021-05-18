@@ -83,8 +83,8 @@ import { defineComponent, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import { mdiCamera } from '@mdi/js'
-import Card from './Card'
-import Icon from './Icon.vue'
+import Card from './ui/Card'
+import Icon from './ui/Icon.vue'
 import { usePets } from '../compositions/pets'
 
 export default defineComponent({

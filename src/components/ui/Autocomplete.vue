@@ -45,7 +45,7 @@
             class="outline-none"
             icon
             color="pink"
-            @click.prevent="clearSelection"
+            @click.prevent="clearSelection()"
             :disabled="!selected"
             flat
           >
@@ -98,8 +98,8 @@
 
 <script>
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import Button from './Button.vue'
-import Icon from './Icon.vue'
+import Button from '../ui/Button.vue'
+import Icon from '../ui/Icon.vue'
 import { mdiClose } from '@mdi/js'
 
 export default defineComponent({

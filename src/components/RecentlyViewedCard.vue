@@ -34,7 +34,7 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePets } from '../compositions/pets'
-import Card from './Card.vue'
+import Card from './ui/Card.vue'
 
 export default defineComponent({
   components: { Card },

@@ -17,8 +17,8 @@
 <script>
 import { defineComponent } from 'vue'
 import GithubButton from './GithubButton.vue'
-import Icon from './Icon.vue'
-import Toolbar from './Toolbar.vue'
+import Icon from './ui/Icon.vue'
+import Toolbar from './ui/Toolbar.vue'
 import { mdiPaw } from '@mdi/js'
 
 export default defineComponent({

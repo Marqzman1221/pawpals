@@ -29,10 +29,24 @@
     </div>
   </div>
 
-  <div v-if="modal" class="static z-50 transition-opacity duration-300" >
-    <pet-search-card class="absolute m-0 top-0 left-0 w-full h-full z-50 border-transparent rounded-none">
+  <div v-if="modal" class="static z-50 transition-opacity duration-300">
+    <pet-search-card
+      class="
+        absolute
+        m-0
+        top-0
+        left-0
+        w-full
+        h-full
+        z-50
+        border-transparent
+        rounded-none
+      "
+    >
       <template #cancel-button>
-        <Button class="mt-6" outlined block @click="closeModal()">CANCEL</Button>
+        <Button class="mt-6" outlined block @click="closeModal()"
+          >CANCEL</Button
+        >
       </template>
     </pet-search-card>
   </div>
@@ -42,9 +56,9 @@
 import { defineComponent, onUnmounted, ref } from 'vue'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import { usePets } from '@/compositions/pets'
-import Button from './Button'
+import Button from './ui/Button'
 import PetSearchCard from './PetSearchCard'
-import Icon from './Icon'
+import Icon from './ui/Icon'
 import { mdiMagnify } from '@mdi/js'
 
 export default defineComponent({
@@ -57,7 +71,6 @@ export default defineComponent({
     const lgAndGreater = breakpoints.greater('lg')
 
     function openModal() {
-      console.log('Open Modal')
       modal.value = true
 
       document.documentElement.style.overflow = 'hidden'
@@ -83,6 +96,6 @@ export default defineComponent({
       closeModal,
       mdiMagnify,
     }
-  }
+  },
 })
 </script>
