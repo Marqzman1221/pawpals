@@ -14,7 +14,6 @@ export default defineComponent({
   components: { Button, Icon },
   setup() {
     function openRepoPage() {
-      console.log('Open Repo Page')
       window.open('https://github.com/Marqzman1221/pawpals', '_blank')
     }
 
