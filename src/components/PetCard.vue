@@ -13,21 +13,47 @@
             <div class="rounded w-16 h-full ml-4 bg-gray-200" />
           </div>
         </div>
-        <div v-show="smAndGreater" class="flex rounded bg-gray-200 mt-2 w-full h-full" />
+        <div
+          v-show="smAndGreater"
+          class="flex rounded bg-gray-200 mt-2 w-full h-full"
+        />
       </div>
     </div>
   </card>
 
   <card
     v-else
-    class="cursor-pointer hover:border-pink-400 active:border-pink-600 transition duration-200 ease-in-out"
+    class="
+      cursor-pointer
+      hover:border-pink-400
+      active:border-pink-600
+      transition
+      duration-200
+      ease-in-out
+    "
     @click="openDetail(animal.id)"
   >
     <div class="flex">
       <div class="flex w-auto">
         <div class="sm:w-48 sm:h-48 w-32 h-32">
-          <img v-if="animal.primary_photo_cropped" class="rounded-lg w-full h-full object-cover" :alt="animal.name" :src="'' + animal.primary_photo_cropped.small" />
-          <div v-else class="flex bg-gray-200 rounded-lg w-full h-full items-center justify-center">
+          <img
+            v-if="animal.primary_photo_cropped"
+            class="rounded-lg w-full h-full object-cover"
+            :alt="animal.name"
+            :src="'' + animal.primary_photo_cropped.small"
+          />
+          <div
+            v-else
+            class="
+              flex
+              bg-gray-200
+              rounded-lg
+              w-full
+              h-full
+              items-center
+              justify-center
+            "
+          >
             <icon class="text-white" :path="mdiCamera" size="xl" />
           </div>
         </div>
@@ -35,10 +61,10 @@
 
       <div class="flex flex-col ml-4">
         <div class="flex flex-col">
-          <div class="flex sm:text-2xl text-lg font-semibold">
+          <div class="flex text-2xl font-semibold">
             {{ animal.name }}
           </div>
-          <div class="flex mt-2 sm:text-xl text-md text-gray-500 font-light">
+          <div class="flex mt-2 text-lg text-gray-500 font-light">
             {{ animal.type }} · {{ displayLocation }}
           </div>
         </div>
