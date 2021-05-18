@@ -55,7 +55,15 @@ export default defineComponent({
         }
       }
 
-      if (props.flat || props.outlined) {
+      if (props.outlined) {
+        return {
+          hover: `${props.color}-600 hover:bg-opacity-5`,
+          base: 'transparent',
+          active: `${props.color}-600 active:bg-opacity-10`,
+        }
+      }
+
+      if (props.flat) {
         return {
           hover: 'transparent',
           base: 'transparent',
@@ -74,8 +82,11 @@ export default defineComponent({
       let classString = `bg-${backgroundColor.value['base']} hover:bg-${backgroundColor.value['hover']} active:bg-${backgroundColor.value['active']} focus:outline-none active:outline-none`
 
       if (props.outlined)
-        classString += ` text-${props.color}-600 hover:text-${props.color}-800 active:text-${props.color}-400 border-2 border-${props.color}-600 hover:border-${props.color}-800 active:border-${props.color}-400`
-      else if (!props.icon) classString += ` text-white`
+        classString += ` hover:text-${props.color}-800 active:text-${props.color}-400 border-2 border-${props.color}-600 hover:border-${props.color}-800 active:border-${props.color}-400`
+
+      if (!props.icon && !props.flat && !props.outlined)
+        classString += ` text-white`
+      else classString += ` text-${props.color}-600`
 
       if (props.icon) classString += ` text-${props.color}-600 p-2`
       else classString += ` px-6 py-2`
