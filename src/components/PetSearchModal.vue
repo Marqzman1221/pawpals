@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onUnmounted, ref } from 'vue'
 import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
 import { usePets } from '@/compositions/pets'
 import Button from './Button'
@@ -59,24 +59,19 @@ export default defineComponent({
     function openModal() {
       console.log('Open Modal')
       modal.value = true
+
+      document.documentElement.style.overflow = 'hidden'
     }
 
     function closeModal() {
       modal.value = false
-      console.log(params.type)
-      console.log(queriedParams.type)
       params.type = queriedParams.type
       params.location = queriedParams.location
-      console.log(params.type)
-      console.log(queriedParams.type)
+
+      document.documentElement.style.overflow = 'auto'
     }
 
-    watch(modal, () => {
-      if (modal.value) {
-        document.documentElement.style.overflow = 'hidden'
-        return
-      }
-
+    onUnmounted(() => {
       document.documentElement.style.overflow = 'auto'
     })
 
